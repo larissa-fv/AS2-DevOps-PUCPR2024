@@ -44,3 +44,9 @@ Resumo Final
 Escreva os testes unitários.
 Configure o GitHub Actions para executar os testes em PRs.
 Capture os screenshots necessários para a entrega.
+
+Site: https://larissa-fv.github.io/AS2-DevOps-PUCPR2024/
+
+### Escolhi este projeto por minha paixão pela música e pelos instrumentos musicais
+
+![image](https://github.com/user-attachments/assets/d45a1fc7-fa16-4682-9746-a212b2605d21)
