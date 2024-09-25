@@ -9,22 +9,28 @@ const soundMap = {
     "L": "sounds/rightCrash.mp3"
 };
 
-// Função para tocar som e animar o botão
-function playSoundAndAnimate(key) {
+// Função para tocar som
+function playSound(key) {
     const sound = soundMap[key.toUpperCase()];
     if (sound) {
-        new Audio(sound).play();
-        animateButton(key);
+        const audio = new Audio(sound);
+        audio.play();
     }
 }
 
 // Função para animar o botão
-function animateButton(currentKey) {
-    const activeButton = document.querySelector(`.${currentKey}`);
+function animateButton(key) {
+    const activeButton = document.querySelector(`.${key}`);
     if (activeButton) {
         activeButton.classList.add("pressed");
         setTimeout(() => activeButton.classList.remove("pressed"), 100);
     }
+}
+
+// Função principal para tocar som e animar botão
+function playSoundAndAnimate(key) {
+    playSound(key);
+    animateButton(key);
 }
 
 // Adiciona ouvintes de eventos a botões e teclas
@@ -32,4 +38,9 @@ document.querySelectorAll(".drum").forEach(button => {
     button.addEventListener("click", () => playSoundAndAnimate(button.innerHTML));
 });
 
-document.addEventListener("keypress", event => playSoundAndAnimate(event.key));
+document.addEventListener("keypress", event => {
+    const key = event.key.toUpperCase();
+    if (soundMap[key]) {
+        playSoundAndAnimate(key);
+    }
+});
