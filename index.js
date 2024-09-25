@@ -1,46 +1,67 @@
-// Mapeamento de teclas para sons
-const soundMap = {
-    "A": "sounds/leftCrash.mp3",
-    "S": "sounds/tom1.mp3",
-    "D": "sounds/snare.mp3",
-    "G": "sounds/kickbass.mp3",
-    "J": "sounds/tom3.mp3",
-    "K": "sounds/tom2.mp3",
-    "L": "sounds/rightCrash.mp3"
-};
+// Detecting mouse click.
+var numberOfDrumButtons = document.querySelectorAll(".drum").length;
 
-// Função para tocar som
-function playSound(key) {
-    const sound = soundMap[key.toUpperCase()];
-    if (sound) {
-        const audio = new Audio(sound);
-        audio.play();
-    }
+for (var i = 0; i < numberOfDrumButtons; i++) {
+    document.querySelectorAll(".drum")[i].addEventListener("click", function () {
+        var buttonInnerHTML = this.innerHTML;
+        makeSound(buttonInnerHTML);
+        buttonAnimation(buttonInnerHTML);
+    });
 }
 
-// Função para animar o botão
-function animateButton(key) {
-    const activeButton = document.querySelector(`.${key}`);
-    if (activeButton) {
-        activeButton.classList.add("pressed");
-        setTimeout(() => activeButton.classList.remove("pressed"), 100);
-    }
-}
-
-// Função principal para tocar som e animar botão
-function playSoundAndAnimate(key) {
-    playSound(key);
-    animateButton(key);
-}
-
-// Adiciona ouvintes de eventos a botões e teclas
-document.querySelectorAll(".drum").forEach(button => {
-    button.addEventListener("click", () => playSoundAndAnimate(button.innerHTML));
+// Detecting keypress.
+document.addEventListener("keypress", function (event) {
+    makeSound(event.key);
+    buttonAnimation(event.key);
 });
 
-document.addEventListener("keypress", event => {
-    const key = event.key.toUpperCase();
-    if (soundMap[key]) {
-        playSoundAndAnimate(key);
+function makeSound(key) {
+    switch (key) {
+        case "A":
+        case "a":
+            var leftCrash = new Audio("sounds/leftCrash.mp3");
+            leftCrash.play();
+            break;
+        case "S":
+        case "s":
+            var tom1 = new Audio("sounds/tom1.mp3");
+            tom1.play();
+            break;
+        case "D":
+        case "d":
+            var snare = new Audio("sounds/snare.mp3");
+            snare.play();
+            break;
+        case "G":
+        case "g":
+            var kickbass = new Audio("sounds/kickbass.mp3");
+            kickbass.play();
+            break;
+        case "J":
+        case "j":
+            var tom3 = new Audio("sounds/tom3.mp3");
+            tom3.play();
+            break;
+        case "K":
+        case "k":
+            var tom2 = new Audio("sounds/tom2.mp3");
+            tom2.play();
+            break;
+        case "L":
+        case "l":
+            var rightCrash = new Audio("sounds/rightCrash.mp3");
+            rightCrash.play();
+            break;
+        default:
+            console.log(buttonInnerHTML);
     }
-});
+}
+
+function buttonAnimation(currentKey) {
+    var activeButton = document.querySelector("." + currentKey);
+    activeButton.classList.add("pressed");
+
+    setTimeout(function () {
+        activeButton.classList.remove("pressed");
+    }, 100);
+}
