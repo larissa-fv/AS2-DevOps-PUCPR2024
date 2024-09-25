@@ -1,0 +1,60 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run Static Security Analysis
+        uses: AppThreat/sast-scan-action@master
+        with:
+          target: index.html, script.js, style.css
+          report_type: summary
+          severities: high, medium
+        env:
+          RISK_LEVEL: '10'
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:dind
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build and Push Docker Image
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          docker build -t atividadesomativa2:latest .
+          docker tag atividadesomativa2 vmlaris/atividadesomativa2:latest
+          echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
+          docker push vmlaris/atividadesomativa2:latest
+
+      - name: Send Notification to Telegram
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: "A implantação da aplicação foi concluída com sucesso!"
+
+      - name: Print Completion Message
+        run: echo "Finalizado com sucesso!"
