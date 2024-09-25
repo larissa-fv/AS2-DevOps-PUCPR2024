@@ -33,11 +33,11 @@ h1 {
 }
 
 .a {
-    background-image: url("Imagens/crash.png");
+    background-image: url("./images/crash.png");
 }
 
 .s {
-    background-image: url("./Imagens/tom1.png");
+    background-image: url("images/tom1.png");
 }
 
 .d {
