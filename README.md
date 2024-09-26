@@ -1,8 +1,11 @@
 # Repositório da AS2 da disciplina de DevOps do curso de ADS da PUCPR.
+## Bateria DRUM virtual.
+
+Repositorio teste. 
 
 ## Conteúdo:
 
-- AS2 da disciplina de DevOps do curso de Tecnologia em Análise e Desenvolvimento de Sistemas da PUCPR.
+- Teste e desenvolvimento de AS2 da disciplina de DevOps do curso de ]tecnologo em Gestão em Tecnologia da Informação da PUCPR.
 
 ## Tarefas a Realizar
 
